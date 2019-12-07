@@ -43,6 +43,27 @@ void startGame(std::vector<Card> &drawPile)
     std::cout << "Game with " << drawPile.size() << " cards" << std::endl;
 }
 
+void displayHand(std::vector<Card> &hand)
+{
+    int size = hand.size();
+    for (int i = 0; i < size; i++)
+    {
+        std::cout << "[";
+        std::string currentCard;
+        if (hand.at(i).special == "REGULAR")
+        {
+            currentCard = hand.at(i).color + std::to_string(hand.at(i).value);
+        }
+        else
+        {
+            currentCard = hand.at(i).color + hand.at(i).special;
+        }
+        std::cout << currentCard;
+        std::cout << "]";
+    }
+    std::cout << std::endl;
+}
+
 void shuffle(std::vector<Card> &drawPile)
 {
     auto rng = std::default_random_engine{};
@@ -55,5 +76,6 @@ int main(int argc, char const *argv[])
     std::vector<Card> drawPile;
     startGame(drawPile);
     shuffle(drawPile);
+    displayHand(drawPile);
     return 0;
 }
