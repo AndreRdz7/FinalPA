@@ -140,6 +140,75 @@ int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand)
     return totalScore;
 }
 
+void drawCard(std::vector<Card> &player, std::vector<Card> &discardPile, std::vector<Card> &drawPile){
+    Card drawnCard = drawPile.at(0);
+    Card topCard = discardPile.at(0);
+    //Check if drawn card matches any values of the top card of discard pile
+    if(drawnCard.color == topCard.color || drawnCard.value == topCard.value || drawnCard.special == topCard.special)
+        discardPile.insert(discardPile.begin(),drawnCard);
+    else
+        player.insert(player.begin(),drawnCard);
+    //SORT CARDS AGAIN
+}
+
+void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &discardPile){
+    //For string Card ([RED2]) retrieve color type and number, and create new card.
+    std::string color = findColor(card);
+    std::string type = findType(card);
+    int value = findNumber(card);
+    Card mycard(color,value,type);
+    //Delete card from user's cards
+    player.erase(std::remove(player.begin(), player.end(), card), player.end());
+    //Add the new card(same card) to the discard pile
+    discardPile.insert(discardPile.begin(),mycard);
+}
+
+std::string findType(std::string card){
+    if (card.find("REVERSE")!=std::string::npos)
+        return "REVERSE";
+    else if (card.find("BLOCK")!=std::string::npos)
+        return "BLOCK";
+    else if (card.find("PLUSTWO")!=std::string::npos)
+        return "PLUSTWO";
+    else return "REGULAR";
+}
+
+std::string findColor(std::string card){
+    if (card.find("YELLOW")!=std::string::npos)
+        return "YELLOW";
+    else if (card.find("RED")!=std::string::npos)
+        return "RED";
+    else if (card.find("BLUE")!=std::string::npos)
+        return "BLUE";
+    else if (card.find("GREEN")!=std::string::npos)
+        return "GREEN";
+    else return "NOTFOUND";
+}
+
+int findNumber(std::string card){
+    if (card.find("1")!=std::string::npos)
+        return 1;
+    else if (card.find("2")!=std::string::npos)
+        return 2;
+    else if (card.find("3")!=std::string::npos)
+        return 3;
+    else if (card.find("4")!=std::string::npos)
+        return 4;
+    if (card.find("5")!=std::string::npos)
+        return 5;
+    else if (card.find("6")!=std::string::npos)
+        return 6;
+    else if (card.find("7")!=std::string::npos)
+        return 7;
+    else if (card.find("8")!=std::string::npos)
+        return 8;
+    else if (card.find("9")!=std::string::npos)
+        return 9;
+    else if (card.find("0")!=std::string::npos)
+        return 0;
+    else return -1;
+}
+
 int main(int argc, char const *argv[])
 {
     // revisar archivo si hay un juego pendiente, si no, se crea uno:
