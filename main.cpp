@@ -82,9 +82,62 @@ void sortHand(std::vector<Card> hand)
 {
 }
 
+/*
+    @params
+    fristHand, secondHand, which are the hands of the 2 players that lost
+    @return
+    integer value of total score
+*/
 int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand)
 {
-    return 0;
+    int totalScore = 0;
+    // firstHand
+    for (int i = 0; i < firstHand.size(); i++)
+    {
+        if (firstHand.at(i).value != -1)
+        {
+            totalScore += firstHand.at(i).value;
+        }
+        else
+        {
+            if (firstHand.at(i).special == "PLUSTWO")
+            {
+                totalScore += 30;
+            }
+            else if (firstHand.at(i).special == "REVERSE")
+            {
+                totalScore += 25;
+            }
+            else
+            {
+                totalScore += 20;
+            }
+        }
+    }
+    // secondHand
+    for (int i = 0; i < secondHand.size(); i++)
+    {
+        if (secondHand.at(i).value != -1)
+        {
+            totalScore += secondHand.at(i).value;
+        }
+        else
+        {
+            if (secondHand.at(i).special == "PLUSTWO")
+            {
+                totalScore += 30;
+            }
+            else if (secondHand.at(i).special == "REVERSE")
+            {
+                totalScore += 25;
+            }
+            else
+            {
+                totalScore += 20;
+            }
+        }
+    }
+    return totalScore;
 }
 
 int main(int argc, char const *argv[])
@@ -95,6 +148,5 @@ int main(int argc, char const *argv[])
     shuffle(drawPile);
     displayHand(drawPile);
     opponentsHand(drawPile, 1);
-
     return 0;
 }
