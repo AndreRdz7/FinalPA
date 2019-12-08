@@ -64,10 +64,23 @@ void displayHand(std::vector<Card> &hand)
     std::cout << std::endl;
 }
 
-void shuffle(std::vector<Card> &drawPile)
+void opponentsHand(std::vector<Card> &hand, int numberOfPlayer)
 {
-    auto rng = std::default_random_engine{};
-    std::shuffle(std::begin(drawPile), std::end(drawPile), rng);
+    int size = hand.size();
+    std::string handDisplay;
+    handDisplay += "P" + std::to_string(numberOfPlayer) + "->" + std::to_string(size);
+    std::cout << handDisplay << std::endl;
+}
+
+void shuffle(std::vector<Card> &drawPile, int times)
+{
+    if (times != 0)
+    {
+        auto rng = std::default_random_engine{};
+        std::shuffle(std::begin(drawPile), std::end(drawPile), rng);
+        times--;
+        shuffle(drawPile, times);
+    }
 }
 
 int main(int argc, char const *argv[])
@@ -75,7 +88,8 @@ int main(int argc, char const *argv[])
     // revisar archivo si hay un juego pendiente, si no, se crea uno:
     std::vector<Card> drawPile;
     startGame(drawPile);
-    shuffle(drawPile);
+    shuffle(drawPile, 3);
     displayHand(drawPile);
+    opponentsHand(drawPile, 1);
     return 0;
 }
