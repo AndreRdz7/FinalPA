@@ -158,7 +158,14 @@ void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &di
     int value = findNumber(card);
     Card mycard(color,value,type);
     //Delete card from user's cards
-    player.erase(std::remove(player.begin(), player.end(), card), player.end());
+	std::vector<Card>::iterator itr = std::find(player.begin(), player.end(), mycard);
+
+	if (itr != player.cend()) {
+		player.erase (player.begin()+std::distance(player.begin(), itr));
+	}
+	else {
+		std::cout << "Element not found";
+	}
     //Add the new card(same card) to the discard pile
     discardPile.insert(discardPile.begin(),mycard);
 }
