@@ -134,23 +134,23 @@ void sortHand(std::vector<Card> hand)
     @return
     integer value of total score
 */
-int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand)
+int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand, int ifh, int ish)
 {
     int totalScore = 0;
     // firstHand
-    for (int i = 0; i < firstHand.size(); i++)
+    if (ifh < firstHand.size())
     {
-        if (firstHand.at(i).value != -1)
+        if (firstHand.at(ifh).value != -1)
         {
-            totalScore += firstHand.at(i).value;
+            totalScore += firstHand.at(ifh).value;
         }
         else
         {
-            if (firstHand.at(i).special == "PLUSTWO")
+            if (firstHand.at(ifh).special == "PLUSTWO")
             {
                 totalScore += 30;
             }
-            else if (firstHand.at(i).special == "REVERSE")
+            else if (firstHand.at(ifh).special == "REVERSE")
             {
                 totalScore += 25;
             }
@@ -159,21 +159,22 @@ int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand)
                 totalScore += 20;
             }
         }
+        getScore(firstHand, secondHand, ifh + 1, ish);
     }
     // secondHand
-    for (int i = 0; i < secondHand.size(); i++)
+    if (ish < secondHand.size())
     {
-        if (secondHand.at(i).value != -1)
+        if (secondHand.at(ish).value != -1)
         {
-            totalScore += secondHand.at(i).value;
+            totalScore += secondHand.at(ish).value;
         }
         else
         {
-            if (secondHand.at(i).special == "PLUSTWO")
+            if (secondHand.at(ish).special == "PLUSTWO")
             {
                 totalScore += 30;
             }
-            else if (secondHand.at(i).special == "REVERSE")
+            else if (secondHand.at(ish).special == "REVERSE")
             {
                 totalScore += 25;
             }
@@ -182,6 +183,7 @@ int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand)
                 totalScore += 20;
             }
         }
+        getScore(firstHand, secondHand, ifh, ish + 1);
     }
     return totalScore;
 }
