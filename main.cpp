@@ -215,35 +215,6 @@ void drawCard(std::vector<Card> &player, std::vector<Card> &discardPile, std::ve
     //SORT CARDS AGAIN
 }
 
-<<<<<<< HEAD
-std::string findType(std::string card){
-    if (card.find("REVERSE")!=std::string::npos)
-        return "REVERSE";
-    else if (card.find("BLOCK")!=std::string::npos)
-        return "BLOCK";
-    else if (card.find("PLUSTWO")!=std::string::npos)
-        return "PLUSTWO";
-    else return "REGULAR";
-=======
-void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &discardPile){
-    //For string Card ([RED2]) retrieve color type and number, and create new card.
-    std::string color = findColor(card);
-    std::string type = findType(card);
-    int value = findNumber(card);
-    Card mycard(color,value,type);
-    //Delete card from user's cards
-	std::vector<Card>::iterator itr = std::find(player.begin(), player.end(), mycard);
-
-	if (itr != player.cend()) {
-		player.erase (player.begin()+std::distance(player.begin(), itr));
-	}
-	else {
-		throw "Element not found";
-	}
-    //Add the new card(same card) to the discard pile
-    discardPile.insert(discardPile.begin(),mycard);
-}
-
 
 void printMenu() {
 	std::cout << "Choose the number of yhe option you want to make:\n";
@@ -252,7 +223,6 @@ void printMenu() {
 	std::cout << "3. PLAYCARD\n";
 	std::cout << "4. HELP\n";
 	std::cout << "5. EXIT\n";
->>>>>>> beeb606a23394f186b385d534e968ba6ff836b12
 }
 
 void printInstructivo() {
@@ -287,7 +257,7 @@ void selectOptionOfMenu(int numberOfPlayer, std::vector<Card> actualPlayerDeck) 
 		try {
             playCard();
         } catch(const char* msg) {
-            cerr << msg << endl;
+            std::cout << msg << std::endl;
         }
 
 		// check if win()
@@ -322,7 +292,6 @@ bool gameIsRunning(std::vector<Card> player, std::vector<Card> pc1, std::vector<
 	}
 }
 
-<<<<<<< HEAD
 
 void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &discardPile){
     //For string Card ([RED2]) retrieve color type and number, and create new card.
@@ -336,10 +305,7 @@ void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &di
     discardPile.insert(discardPile.begin(),mycard);
 }
 
-int main(int argc, char const *argv[])
-=======
 int main(int argc, char const* argv[])
->>>>>>> beeb606a23394f186b385d534e968ba6ff836b12
 {
 	// revisar archivo si hay un juego pendiente, si no, se crea uno:
 	std::vector<Card> drawPile;
