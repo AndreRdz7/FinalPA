@@ -211,7 +211,7 @@ void drawCard(std::vector<Card> &player, std::vector<Card> &discardPile, std::ve
 
     //Check if drawn card matches any values of the top card of discard pile
     if(drawnCard.color == topCard.color || drawnCard.value == topCard.value || drawnCard.special == topCard.special)
-        discardPile.insert(discardPile.begin(),drawnCard);
+       discardPile.insert(discardPile.begin(),drawnCard); 
     else
         player.insert(player.begin(),drawnCard);
     //SORT CARDS AGAIN
@@ -295,16 +295,30 @@ bool gameIsRunning(std::vector<Card> player, std::vector<Card> pc1, std::vector<
 }
 
 
-void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &discardPile){
-    //For string Card ([RED2]) retrieve color type and number, and create new card.
-    std::string color = findColor(card);
-    std::string type = findType(card);
-    int value = findNumber(card);
-    Card mycard(color,value,type);
+void playCard(Card mycard, std::vector<Card> &player, std::vector<Card> &discardPile){
     //Delete card from user's cards
     player.erase(std::remove(player.begin(), player.end(), mycard), player.end());
     //Add the new card(same card) to the discard pile
     discardPile.insert(discardPile.begin(),mycard);
+}
+
+Card checkPlayCardCPU(std::vector<Card> &playercpu, std::vector<Card> &discardPile){
+    Card topCard = discardPile.at(0);
+    for(auto card: playercpu){
+	    if(card.color == topCard.color || card.value == topCard.value || card.special == topCard.special){
+            return card;
+        }
+    }
+    Card mycard("NULL",-2,"NULL");
+    return mycard;
+}
+
+Card processStringToCard(std::string card){
+    std::string color = findColor(card);
+    std::string type = findType(card);
+    int value = findNumber(card);
+    Card mycard(color,value,type);
+    return mycard;
 }
 
 int main(int argc, char const* argv[])
