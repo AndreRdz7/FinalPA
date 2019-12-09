@@ -137,23 +137,23 @@ void sortHand(std::vector<Card> hand)
     @return
     integer value of total score
 */
-int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand)
+int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand, int ifh, int ish)
 {
     int totalScore = 0;
     // firstHand
-    for (int i = 0; i < firstHand.size(); i++)
+    if (ifh < firstHand.size())
     {
-        if (firstHand.at(i).value != -1)
+        if (firstHand.at(ifh).value != -1)
         {
-            totalScore += firstHand.at(i).value;
+            totalScore += firstHand.at(ifh).value;
         }
         else
         {
-            if (firstHand.at(i).special == "PLUSTWO")
+            if (firstHand.at(ifh).special == "PLUSTWO")
             {
                 totalScore += 30;
             }
-            else if (firstHand.at(i).special == "REVERSE")
+            else if (firstHand.at(ifh).special == "REVERSE")
             {
                 totalScore += 25;
             }
@@ -162,21 +162,22 @@ int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand)
                 totalScore += 20;
             }
         }
+        getScore(firstHand, secondHand, ifh + 1, ish);
     }
     // secondHand
-    for (int i = 0; i < secondHand.size(); i++)
+    if (ish < secondHand.size())
     {
-        if (secondHand.at(i).value != -1)
+        if (secondHand.at(ish).value != -1)
         {
-            totalScore += secondHand.at(i).value;
+            totalScore += secondHand.at(ish).value;
         }
         else
         {
-            if (secondHand.at(i).special == "PLUSTWO")
+            if (secondHand.at(ish).special == "PLUSTWO")
             {
                 totalScore += 30;
             }
-            else if (secondHand.at(i).special == "REVERSE")
+            else if (secondHand.at(ish).special == "REVERSE")
             {
                 totalScore += 25;
             }
@@ -185,6 +186,7 @@ int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand)
                 totalScore += 20;
             }
         }
+        getScore(firstHand, secondHand, ifh, ish + 1);
     }
     return totalScore;
 }
@@ -223,7 +225,7 @@ void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &di
 		player.erase (player.begin()+std::distance(player.begin(), itr));
 	}
 	else {
-		std::cout << "Element not found";
+		throw "Element not found";
 	}
     //Add the new card(same card) to the discard pile
     discardPile.insert(discardPile.begin(),mycard);
@@ -268,7 +270,13 @@ void selectOptionOfMenu(int numberOfPlayer, std::vector<Card> actualPlayerDeck) 
 	case 3:
 		std::cout << "You choose: PLAYCARD\n";
 		// check if the the user had one card... if yes, punish him for not saying UNO
-		// play card function()
+        //no se que va adentro de playCard
+		try {
+            playCard();
+        } catch(const char* msg) {
+            cerr << msg << endl;
+        }
+
 		// check if win()
 		// finish Turn()
 		break;
