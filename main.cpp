@@ -210,7 +210,7 @@ void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &di
 		player.erase (player.begin()+std::distance(player.begin(), itr));
 	}
 	else {
-		std::cout << "Element not found";
+		throw "Element not found";
 	}
     //Add the new card(same card) to the discard pile
     discardPile.insert(discardPile.begin(),mycard);
@@ -254,7 +254,13 @@ void selectOptionOfMenu(int numberOfPlayer, std::vector<Card> actualPlayerDeck) 
 	case 3:
 		std::cout << "You choose: PLAYCARD\n";
 		// check if the the user had one card... if yes, punish him for not saying UNO
-		// play card function()
+        //no se que va adentro de playCard
+		try {
+            playCard();
+        } catch(const char* msg) {
+            cerr << msg << endl;
+        }
+
 		// check if win()
 		// finish Turn()
 		break;
