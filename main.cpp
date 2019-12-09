@@ -117,11 +117,11 @@ void displayTopCard(std::vector<Card> &discardPile){
     std::string topCard;
     if (discardPile.at(0).special == "REGULAR")
     {
-        currentCard = discardPile.at(0).color + std::to_string(discardPile.at(0).value);
+        topCard = discardPile.at(0).color + std::to_string(discardPile.at(0).value);
     }
     else
     {
-        currentCard = discardPile.at(0).color + discardPile.at(0).special;
+        topCard = discardPile.at(0).color + discardPile.at(0).special;
     }
     std::cout << "[" << topCard << "]" << std::endl;
 }
