@@ -17,6 +17,9 @@ public:
         value = cardValue;
         special = cardSpecial;
     }
+        bool operator==(const Card &card) {
+		return card.color == color && card.value == value && card.special == special;
+	}
 };
 
 void startGame(std::vector<Card> &drawPile)
@@ -98,25 +101,6 @@ void drawCard(std::vector<Card> &player, std::vector<Card> &discardPile, std::ve
     //SORT CARDS AGAIN
 }
 
-void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &discardPile){
-    //For string Card ([RED2]) retrieve color type and number, and create new card.
-    std::string color = findColor(card);
-    std::string type = findType(card);
-    int value = findNumber(card);
-    Card mycard(color,value,type);
-    //Delete card from user's cards
-	std::vector<Card>::iterator itr = std::find(player.begin(), player.end(), mycard);
-
-	if (itr != player.cend()) {
-		player.erase (player.begin()+std::distance(player.begin(), itr));
-	}
-	else {
-		std::cout << "Element not found";
-	}
-    //Add the new card(same card) to the discard pile
-    discardPile.insert(discardPile.begin(),mycard);
-}
-
 std::string findType(std::string card){
     if (card.find("REVERSE")!=std::string::npos)
         return "REVERSE";
@@ -161,6 +145,19 @@ int findNumber(std::string card){
     else if (card.find("0")!=std::string::npos)
         return 0;
     else return -1;
+}
+
+
+void playCard(std::string card, std::vector<Card> &player, std::vector<Card> &discardPile){
+    //For string Card ([RED2]) retrieve color type and number, and create new card.
+    std::string color = findColor(card);
+    std::string type = findType(card);
+    int value = findNumber(card);
+    Card mycard(color,value,type);
+    //Delete card from user's cards
+    player.erase(std::remove(player.begin(), player.end(), mycard), player.end());
+    //Add the new card(same card) to the discard pile
+    discardPile.insert(discardPile.begin(),mycard);
 }
 
 int main(int argc, char const *argv[])
