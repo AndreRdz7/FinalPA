@@ -207,6 +207,8 @@ int getScore(std::vector<Card> firstHand, std::vector<Card> secondHand, int ifh,
 void drawCard(std::vector<Card> &player, std::vector<Card> &discardPile, std::vector<Card> &drawPile){
     Card drawnCard = drawPile.at(0);
     Card topCard = discardPile.at(0);
+    drawPile.erase(drawPile.begin());
+
     //Check if drawn card matches any values of the top card of discard pile
     if(drawnCard.color == topCard.color || drawnCard.value == topCard.value || drawnCard.special == topCard.special)
         discardPile.insert(discardPile.begin(),drawnCard);
