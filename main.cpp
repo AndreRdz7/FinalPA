@@ -113,6 +113,19 @@ void displayHand(std::vector<Card> &hand)
     std::cout << std::endl;
 }
 
+void displayTopCard(std::vector<Card> &discardPile){
+    std::string topCard;
+    if (discardPile.at(0).special == "REGULAR")
+    {
+        currentCard = discardPile.at(0).color + std::to_string(discardPile.at(0).value);
+    }
+    else
+    {
+        currentCard = discardPile.at(0).color + discardPile.at(0).special;
+    }
+    std::cout << "[" << topCard << "]" << std::endl;
+}
+
 void opponentsHand(std::vector<Card> &hand, int numberOfPlayer)
 {
     int size = hand.size();
@@ -350,5 +363,6 @@ int main(int argc, char const* argv[])
 
 	displayHand(drawPile);
 	opponentsHand(drawPile, 1);
+    displayTopCard(drawPile);
 	return 0;
 }
